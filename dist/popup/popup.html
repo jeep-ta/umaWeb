@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chibi Goobers Control Center</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script type="module" crossorigin src="/popup.js"></script>
+  <link rel="modulepreload" crossorigin href="/chunks/modulepreload-polyfill.js">
+  <link rel="modulepreload" crossorigin href="/chunks/ChibiConfigs.js">
+  <link rel="stylesheet" crossorigin href="/assets/popup.css">
+</head>
+<body>
+  <div class="popup-container">
+    <!-- Header -->
+    <header class="header">
+      <div class="title-group">
+        <span class="header-icon">🐾</span>
+        <div>
+          <h1 class="title">Chibi Goobers</h1>
+          <p class="subtitle">Your 3D Desktop Companions</p>
+        </div>
+      </div>
+      <div class="badge">v1.0</div>
+    </header>
+
+    <!-- Quick Action Bar -->
+    <section class="section actions-section">
+      <h2 class="section-title">Quick Actions</h2>
+      <div class="action-grid">
+        <button id="btn-wave" class="btn btn-action" title="Wave & Say Hi!">
+          <span class="btn-icon">👋</span>
+          <span class="btn-label">Say Hi!</span>
+        </button>
+        <button id="btn-feed" class="btn btn-action" title="Drop carrots & cake">
+          <span class="btn-icon">🥕</span>
+          <span class="btn-label">Feed Snack</span>
+        </button>
+        <button id="btn-stampede" class="btn btn-action" title="Ready, Set, GO!">
+          <span class="btn-icon">🏁</span>
+          <span class="btn-label">Stampede!</span>
+        </button>
+        <button id="btn-nap" class="btn btn-action" title="Tuck everyone in">
+          <span class="btn-icon">💤</span>
+          <span class="btn-label">Group Nap</span>
+        </button>
+        <button id="btn-wake" class="btn btn-action" title="Wakey wakey!">
+          <span class="btn-icon">☀️</span>
+          <span class="btn-label">Wake Up</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- Chibi Roster Selection -->
+    <section class="section roster-section">
+      <h2 class="section-title">Active Goobers</h2>
+      <div class="roster-grid">
+        <!-- Spe -->
+        <label class="chibi-card" data-chibi="spe" style="--card-accent: #ff76ac;">
+          <input type="checkbox" id="check-spe" checked>
+          <div class="chibi-info">
+            <span class="chibi-avatar">🌾</span>
+            <div class="chibi-details">
+              <span class="chibi-name">Special Week</span>
+              <span class="chibi-sub">Agemasen!! 🥕</span>
+            </div>
+          </div>
+          <span class="custom-checkbox"></span>
+        </label>
+
+        <!-- Suzuka -->
+        <label class="chibi-card" data-chibi="suzuka" style="--card-accent: #2ed573;">
+          <input type="checkbox" id="check-suzuka" checked>
+          <div class="chibi-info">
+            <span class="chibi-avatar">💨</span>
+            <div class="chibi-details">
+              <span class="chibi-name">Silence Suzuka</span>
+              <span class="chibi-sub">Fast as wind ✨</span>
+            </div>
+          </div>
+          <span class="custom-checkbox"></span>
+        </label>
+
+        <!-- Oguri -->
+        <label class="chibi-card" data-chibi="oguri" style="--card-accent: #70a1ff;">
+          <input type="checkbox" id="check-oguri" checked>
+          <div class="chibi-info">
+            <span class="chibi-avatar">🍙</span>
+            <div class="chibi-details">
+              <span class="chibi-name">Oguri Cap</span>
+              <span class="chibi-sub">Snack hunter 🍽️</span>
+            </div>
+          </div>
+          <span class="custom-checkbox"></span>
+        </label>
+
+        <!-- Helios -->
+        <label class="chibi-card" data-chibi="helios" style="--card-accent: #ffa502;">
+          <input type="checkbox" id="check-helios" checked>
+          <div class="chibi-info">
+            <span class="chibi-avatar">⚡</span>
+            <div class="chibi-details">
+              <span class="chibi-name">Daitaku Helios</span>
+              <span class="chibi-sub">WAY TO GO!! 🤟</span>
+            </div>
+          </div>
+          <span class="custom-checkbox"></span>
+        </label>
+
+        <!-- Mambo -->
+        <label class="chibi-card" data-chibi="mambo" style="--card-accent: #ff6b81;">
+          <input type="checkbox" id="check-mambo" checked>
+          <div class="chibi-info">
+            <span class="chibi-avatar">🌸</span>
+            <div class="chibi-details">
+              <span class="chibi-name">Matikane Tannhauser</span>
+              <span class="chibi-sub">Ei, Ei, Mun! ✨</span>
+            </div>
+          </div>
+          <span class="custom-checkbox"></span>
+        </label>
+      </div>
+    </section>
+
+    <!-- Sliders & Tweaks -->
+    <section class="section sliders-section">
+      <h2 class="section-title">Playground Settings</h2>
+
+      <div class="slider-group">
+        <div class="slider-header">
+          <span class="slider-label">Population</span>
+          <span id="val-population" class="slider-val">3</span>
+        </div>
+        <input type="range" id="range-population" min="1" max="5" value="3" step="1">
+      </div>
+
+      <div class="slider-group">
+        <div class="slider-header">
+          <span class="slider-label">Chibi Scale</span>
+          <span id="val-scale" class="slider-val">1.0x</span>
+        </div>
+        <input type="range" id="range-scale" min="0.5" max="2.0" value="1.0" step="0.1">
+      </div>
+
+      <div class="slider-group">
+        <div class="slider-header">
+          <span class="slider-label">Move Speed</span>
+          <span id="val-speed" class="slider-val">1.0x</span>
+        </div>
+        <input type="range" id="range-speed" min="0.5" max="2.5" value="1.0" step="0.1">
+      </div>
+
+      <div class="slider-group">
+        <div class="slider-header">
+          <span class="slider-label">Sound Volume</span>
+          <span id="val-volume" class="slider-val">60%</span>
+        </div>
+        <input type="range" id="range-volume" min="0" max="100" value="60" step="5">
+      </div>
+
+      <div class="toggle-row">
+        <span class="toggle-label">Procedural Sound FX</span>
+        <label class="switch">
+          <input type="checkbox" id="toggle-sound" checked>
+          <span class="slider-round"></span>
+        </label>
+      </div>
+
+      <div class="toggle-row">
+        <span class="toggle-label">Speech & Emotion Bubbles</span>
+        <label class="switch">
+          <input type="checkbox" id="toggle-speech" checked>
+          <span class="slider-round"></span>
+        </label>
+      </div>
+    </section>
+
+    <!-- Footer tip -->
+    <footer class="footer">
+      <span>💡 Protip: Press <kbd>Alt + C</kbd> on any tab to feed snacks!</span>
+    </footer>
+  </div>
+
+</body>
+</html>

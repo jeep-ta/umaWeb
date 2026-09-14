@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chibi Goobers: 3D Playground & Extension Demo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./src/content/content.css">
+  <style>
+    :root {
+      --bg-dark: #0d1117;
+      --bg-card: rgba(23, 27, 38, 0.75);
+      --border-card: rgba(255, 255, 255, 0.08);
+      --accent-pink: #ff76ac;
+      --accent-blue: #70a1ff;
+      --accent-green: #2ed573;
+      --accent-yellow: #ffa502;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      background-image: 
+        radial-gradient(at 20% 15%, rgba(255, 118, 172, 0.12) 0px, transparent 50%),
+        radial-gradient(at 80% 25%, rgba(112, 161, 255, 0.12) 0px, transparent 50%),
+        radial-gradient(at 50% 85%, rgba(46, 213, 115, 0.08) 0px, transparent 50%);
+      color: #f1f5f9;
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+      padding-bottom: 180px; /* Space for chibis roaming on bottom floor */
+    }
+
+    /* Mock Web Page Header */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 36px;
+      background: rgba(13, 17, 23, 0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border-card);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 800;
+      font-size: 20px;
+      letter-spacing: -0.5px;
+    }
+
+    .brand-badge {
+      font-size: 11px;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--accent-pink), var(--accent-blue));
+      padding: 4px 10px;
+      border-radius: 20px;
+      color: white;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 24px;
+      font-size: 14px;
+      font-weight: 600;
+      color: #94a3b8;
+    }
+
+    .nav-links a {
+      color: inherit;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: #f8fafc;
+    }
+
+    /* Hero Section */
+    .hero {
+      max-width: 1100px;
+      margin: 40px auto 30px;
+      padding: 0 24px;
+      text-align: center;
+    }
+
+    .hero-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 30px;
+      font-size: 12px;
+      font-weight: 600;
+      color: #cbd5e1;
+      margin-bottom: 16px;
+    }
+
+    .hero h1 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 48px;
+      font-weight: 900;
+      line-height: 1.15;
+      margin-bottom: 16px;
+      letter-spacing: -1px;
+    }
+
+    .gradient-text {
+      background: linear-gradient(135deg, #ff76ac 0%, #a55eea 50%, #70a1ff 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero p {
+      font-size: 17px;
+      color: #94a3b8;
+      max-width: 680px;
+      margin: 0 auto 28px;
+      line-height: 1.6;
+    }
+
+    /* Interactive Instruction Pill Grid */
+    .tips-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+      max-width: 1040px;
+      margin: 0 auto 36px;
+      padding: 0 20px;
+    }
+
+    .tip-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-card);
+      border-radius: 16px;
+      padding: 16px;
+      text-align: left;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+      transition: transform 0.2s, border-color 0.2s;
+    }
+
+    .tip-card:hover {
+      transform: translateY(-2px);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .tip-icon {
+      font-size: 26px;
+      line-height: 1;
+    }
+
+    .tip-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: #f8fafc;
+      margin-bottom: 4px;
+    }
+
+    .tip-desc {
+      font-size: 12px;
+      color: #94a3b8;
+      line-height: 1.4;
+    }
+
+    /* Floating Controller Dock (Simulating Extension Popup) */
+    .control-dock {
+      position: fixed;
+      top: 90px;
+      right: 28px;
+      width: 340px;
+      background: rgba(20, 24, 34, 0.9);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 20px;
+      padding: 18px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.05);
+      z-index: 100;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .dock-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .dock-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 16px;
+      font-weight: 800;
+      color: #f8fafc;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .dock-actions {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 6px;
+      margin-bottom: 16px;
+    }
+
+    .dock-btn {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 8px 4px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      color: #f1f5f9;
+      cursor: pointer;
+      font-family: inherit;
+      transition: all 0.2s ease;
+    }
+
+    .dock-btn:hover {
+      background: rgba(255, 255, 255, 0.15);
+      border-color: rgba(255, 255, 255, 0.25);
+      transform: translateY(-2px);
+    }
+
+    .dock-btn:active {
+      transform: scale(0.94);
+    }
+
+    .dock-btn span.emoji {
+      font-size: 20px;
+    }
+
+    .dock-btn span.text {
+      font-size: 10px;
+      font-weight: 700;
+    }
+
+    /* Roster toggles */
+    .roster-list {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 14px;
+    }
+
+    .roster-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 10px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 600;
+      transition: background 0.2s;
+    }
+
+    .roster-item:hover {
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .roster-label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .slider-row {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      margin-bottom: 10px;
+    }
+
+    .slider-info {
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+      font-weight: 600;
+      color: #94a3b8;
+    }
+
+    .slider-info span.val {
+      color: var(--accent-blue);
+      font-weight: 700;
+    }
+
+    input[type="range"] {
+      -webkit-appearance: none;
+      width: 100%;
+      height: 5px;
+      border-radius: 4px;
+      background: rgba(255, 255, 255, 0.15);
+      outline: none;
+    }
+
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: var(--accent-pink);
+      cursor: pointer;
+      box-shadow: 0 0 8px rgba(255, 118, 172, 0.8);
+    }
+
+    /* Mock Web Content cards */
+    .content-grid {
+      max-width: 1040px;
+      margin: 20px auto 60px;
+      padding: 0 20px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .content-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-card);
+      border-radius: 20px;
+      padding: 24px;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .card-tag {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: var(--accent-pink);
+      margin-bottom: 8px;
+    }
+
+    .content-card h3 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: #f8fafc;
+    }
+
+    .content-card p {
+      font-size: 13px;
+      color: #94a3b8;
+      line-height: 1.5;
+    }
+
+    /* Chibi Overlay Containers */
+    #chibi-goobers-root {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 90;
+      overflow: hidden;
+    }
+
+    #chibi-canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav>
+    <div class="brand">
+      <span>🐾</span>
+      <span>Chibi Goobers</span>
+      <span class="brand-badge">Extension Playground</span>
+    </div>
+    <div class="nav-links">
+      <a href="#features">Features</a>
+      <a href="#controls">Controls</a>
+      <a href="test-preview.html">3D Inspect</a>
+    </div>
+  </nav>
+
+  <!-- Hero Banner -->
+  <header class="hero">
+    <div class="hero-pill">
+      <span>✨ Manifest V3 Browser Extension Ready</span>
+    </div>
+    <h1>Meet Your 3D Desktop <span class="gradient-text">Goobers</span></h1>
+    <p>
+      Fully rigged 3D anime chibi models roaming across the bottom of your screen. Pick them up, fling them, pet them with hearts, feed them snacks, or trigger high-speed stampedes!
+    </p>
+  </header>
+
+  <!-- Interaction Tips Grid -->
+  <section class="tips-grid" id="features">
+    <div class="tip-card">
+      <span class="tip-icon">🤏</span>
+      <div>
+        <h4 class="tip-title">Pick Up & Toss</h4>
+        <p class="tip-desc">Click & drag any chibi into the air to watch their legs kick frantically, then release with momentum to fling them across the screen!</p>
+      </div>
+    </div>
+
+    <div class="tip-card">
+      <span class="tip-icon">❤️</span>
+      <div>
+        <h4 class="tip-title">Headpats & Petting</h4>
+        <p class="tip-desc">Hold your cursor and wiggle rapidly over a chibi's head to pet them. Watch floating hearts erupt and listen to contented purrs!</p>
+      </div>
+    </div>
+
+    <div class="tip-card">
+      <span class="tip-icon">🥕</span>
+      <div>
+        <h4 class="tip-title">Feed Snacks</h4>
+        <p class="tip-desc">Click the carrot button or press <kbd>Alt + C</kbd> anywhere. Watch nearby chibis rush over for tasty treats and crunchy munch sounds!</p>
+      </div>
+    </div>
+
+    <div class="tip-card">
+      <span class="tip-icon">🏁</span>
+      <div>
+        <h4 class="tip-title">Stampede Race</h4>
+        <p class="tip-desc">Hit the Stampede button to line up all your active chibis on the left for a high-octane sprint across the bottom of the screen!</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Mock Web Content Section -->
+  <main class="content-grid">
+    <article class="content-card">
+      <span class="card-tag">Procedural 3D Rigging</span>
+      <h3>Zero Stored Keyframes</h3>
+      <p>150+ skeletal bones per character are dynamically driven by procedural physics, pendulum swings, squash-and-stretch landing impacts, and randomized emotional gestures.</p>
+    </article>
+
+    <article class="content-card">
+      <span class="card-tag">Web Audio Synthesizer</span>
+      <h3>Zero Audio Files Required</h3>
+      <p>All sound effects (footstep taps, squeaks, springy boings, munching crumbs, purrs, and race whistles) are synthesized in real-time using the browser's Web Audio API.</p>
+    </article>
+
+    <article class="content-card">
+      <span class="card-tag">Isolated Shadow DOM</span>
+      <h3>Non-Intrusive Overlay</h3>
+      <p>All canvases, speech bubbles, and particle effects reside inside an encapsulated Shadow DOM root to guarantee zero CSS bleeding or interference with host websites.</p>
+    </article>
+  </main>
+
+  <!-- Floating Extension Remote Controller -->
+  <aside class="control-dock" id="controls">
+    <div class="dock-header">
+      <div class="dock-title">
+        <span>🎮</span>
+        <span>Goober Controls</span>
+      </div>
+      <span style="font-size: 11px; color: #2ed573; font-weight: 700;">● Active</span>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="dock-actions">
+      <button id="dock-btn-wave" class="dock-btn" title="Wave to User">
+        <span class="emoji">👋</span>
+        <span class="text">Wave</span>
+      </button>
+      <button id="dock-btn-trot" class="dock-btn" title="Trot Gait">
+        <span class="emoji">🐎</span>
+        <span class="text">Trot</span>
+      </button>
+      <button id="dock-btn-sprint" class="dock-btn" title="High-Speed Sprint">
+        <span class="emoji">⚡</span>
+        <span class="text">Sprint</span>
+      </button>
+      <button id="dock-btn-stampede" class="dock-btn" title="Start Race!">
+        <span class="emoji">🏁</span>
+        <span class="text">Race!</span>
+      </button>
+      <button id="dock-btn-feed" class="dock-btn" title="Drop Carrots">
+        <span class="emoji">🥕</span>
+        <span class="text">Snack</span>
+      </button>
+      <button id="dock-btn-nap" class="dock-btn" title="Group Nap">
+        <span class="emoji">💤</span>
+        <span class="text">Nap</span>
+      </button>
+      <button id="dock-btn-wake" class="dock-btn" title="Wake Up">
+        <span class="emoji">☀️</span>
+        <span class="text">Wake</span>
+      </button>
+    </div>
+
+    <!-- Roster Toggles -->
+    <div class="roster-list">
+      <label class="roster-item" style="color: #ff76ac;">
+        <span class="roster-label">🌾 Special Week</span>
+        <input type="checkbox" id="dock-spe" checked>
+      </label>
+      <label class="roster-item" style="color: #2ed573;">
+        <span class="roster-label">💨 Silence Suzuka</span>
+        <input type="checkbox" id="dock-suzuka" checked>
+      </label>
+      <label class="roster-item" style="color: #70a1ff;">
+        <span class="roster-label">🍙 Oguri Cap</span>
+        <input type="checkbox" id="dock-oguri" checked>
+      </label>
+      <label class="roster-item" style="color: #ffa502;">
+        <span class="roster-label">⚡ Daitaku Helios</span>
+        <input type="checkbox" id="dock-helios" checked>
+      </label>
+      <label class="roster-item" style="color: #ff6b81;">
+        <span class="roster-label">🌸 Matikane Tannhauser</span>
+        <input type="checkbox" id="dock-mambo" checked>
+      </label>
+    </div>
+
+    <!-- Sliders -->
+    <div class="slider-row">
+      <div class="slider-info">
+        <span>Population</span>
+        <span id="dock-val-pop" class="val">5</span>
+      </div>
+      <input type="range" id="dock-range-pop" min="1" max="5" value="5" step="1">
+    </div>
+
+    <div class="slider-row">
+      <div class="slider-info">
+        <span>Chibi Scale</span>
+        <span id="dock-val-scale" class="val">1.0x</span>
+      </div>
+      <input type="range" id="dock-range-scale" min="0.5" max="2.0" value="1.0" step="0.1">
+    </div>
+
+    <div class="slider-row">
+      <div class="slider-info">
+        <span>Move Speed</span>
+        <span id="dock-val-speed" class="val">1.0x</span>
+      </div>
+      <input type="range" id="dock-range-speed" min="0.5" max="2.5" value="1.0" step="0.1">
+    </div>
+
+    <div class="slider-row">
+      <div class="slider-info">
+        <span>SFX Volume</span>
+        <span id="dock-val-vol" class="val">60%</span>
+      </div>
+      <input type="range" id="dock-range-vol" min="0" max="100" value="60" step="5">
+    </div>
+  </aside>
+
+  <!-- Chibi Goobers Overlay Root & Canvas -->
+  <div id="chibi-goobers-root">
+    <canvas id="chibi-canvas"></canvas>
+  </div>
+
+  <script type="module">
+    import { ChibiManager } from './src/chibi/ChibiManager.js';
+    import { DEFAULT_SETTINGS } from './src/chibi/ChibiConfigs.js';
+
+    const canvas = document.getElementById('chibi-canvas');
+    const container = document.getElementById('chibi-goobers-root');
+
+    // Initialize manager
+    const manager = new ChibiManager(canvas, container, {
+      ...DEFAULT_SETTINGS,
+      population: 5,
+      enabledChibis: ['spe', 'suzuka', 'oguri', 'helios', 'mambo']
+    });
+
+    // Make manager accessible for debugging/testing
+    window.chibiManager = manager;
+
+    // Connect remote dock controls
+    document.getElementById('dock-btn-wave').addEventListener('click', () => manager.waveAll());
+    document.getElementById('dock-btn-trot').addEventListener('click', () => manager.trotAll());
+    document.getElementById('dock-btn-sprint').addEventListener('click', () => manager.sprintAll());
+    document.getElementById('dock-btn-feed').addEventListener('click', () => manager.dropSnack());
+    document.getElementById('dock-btn-stampede').addEventListener('click', () => manager.startStampede());
+    document.getElementById('dock-btn-nap').addEventListener('click', () => manager.groupNap());
+    document.getElementById('dock-btn-wake').addEventListener('click', () => manager.wakeAll());
+
+    // Sliders
+    const rangePop = document.getElementById('dock-range-pop');
+    const valPop = document.getElementById('dock-val-pop');
+    rangePop.addEventListener('input', (e) => {
+      const v = parseInt(e.target.value, 10);
+      valPop.textContent = v;
+      manager.updateSettings({ population: v });
+    });
+
+    const rangeScale = document.getElementById('dock-range-scale');
+    const valScale = document.getElementById('dock-val-scale');
+    rangeScale.addEventListener('input', (e) => {
+      const v = parseFloat(e.target.value);
+      valScale.textContent = `${v.toFixed(1)}x`;
+      manager.updateSettings({ scale: v });
+    });
+
+    const rangeSpeed = document.getElementById('dock-range-speed');
+    const valSpeed = document.getElementById('dock-val-speed');
+    rangeSpeed.addEventListener('input', (e) => {
+      const v = parseFloat(e.target.value);
+      valSpeed.textContent = `${v.toFixed(1)}x`;
+      manager.updateSettings({ speed: v });
+    });
+
+    const rangeVol = document.getElementById('dock-range-vol');
+    const valVol = document.getElementById('dock-val-vol');
+    rangeVol.addEventListener('input', (e) => {
+      const v = parseInt(e.target.value, 10);
+      valVol.textContent = `${v}%`;
+      manager.updateSettings({ volume: v / 100 });
+    });
+
+    // Checkboxes
+    const dockChecks = {
+      spe: document.getElementById('dock-spe'),
+      suzuka: document.getElementById('dock-suzuka'),
+      oguri: document.getElementById('dock-oguri'),
+      helios: document.getElementById('dock-helios'),
+      mambo: document.getElementById('dock-mambo')
+    };
+
+    Object.entries(dockChecks).forEach(([id, el]) => {
+      el.addEventListener('change', () => {
+        const enabled = [];
+        Object.entries(dockChecks).forEach(([k, cb]) => {
+          if (cb.checked) enabled.push(k);
+        });
+        if (enabled.length === 0) {
+          el.checked = true;
+          return;
+        }
+        manager.updateSettings({ enabledChibis: enabled });
+      });
+    });
+
+    // Alt + C shortcut
+    window.addEventListener('keydown', (e) => {
+      if (e.altKey && (e.key === 'c' || e.key === 'C')) {
+        manager.dropSnack();
+      }
+    });
+  </script>
+</body>
+</html>

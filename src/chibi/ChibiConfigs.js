@@ -1,0 +1,540 @@
+// Configuration and metadata for all Chibi characters
+// Adheres strictly to Character Linguistic Blueprints and Voice Synthesis
+
+export function resolveAssetUrl(path) {
+  const extApi = (typeof browser !== 'undefined' && browser.runtime?.getURL)
+    ? browser.runtime
+    : (typeof chrome !== 'undefined' && chrome.runtime?.getURL ? chrome.runtime : null);
+
+  if (extApi) {
+    // Strip leading ./ if present
+    const cleanPath = path.replace(/^\.\//, '');
+    return extApi.getURL(cleanPath);
+  }
+  return path;
+}
+
+export const CHIBI_CONFIGS = {
+  spe: {
+    id: 'spe',
+    name: 'Special Week',
+    title: 'The Country Bumpkin Goober',
+    model: './source/agemasen.fbx',
+    textures: {
+      body: './textures/tex_mbdy1001_00_diff.png',
+      hair: './textures/tex_mchr1001_00_hair_diff.png',
+      face: './textures/tex_mchr0001_00_face0_1_diff.png',
+      cheek: './textures/tex_mchr0001_00_face0_0_cheek0.png',
+      eye: './textures/tex_mchr1001_00_eye_diff.png',
+      mouth: './textures/tex_mchr1001_00_mouth_diff.png',
+      brow: './textures/tex_mchr1001_00_mayu_diff.png',
+      tail: './textures/tex_mtail0001_00_1001_diff.png'
+    },
+    baseScale: 0.0065,
+    speedMultiplier: 1.05,
+    themeColor: '#ff76ac',
+    defaultHandPose: 'RELAXED_CUP',
+    personalityArmStyle: 'BOUNCY',
+    quotes: [
+      'Watashi, I will definitely become Japan\'s number one Uma Musume, desu! ✨',
+      'Okaasan, are you watching from Hokkaido?! Watashi is doing her absolute best! 🌾',
+      'Suzuka-san\'s running form is so beautiful... Watashi wants to run right beside her! ✨',
+      'Snack time?! Is that an extra large bowl of carrots, desu ka?! 🥕',
+      'Fueee?! Was my stride a little too wide just now?! I must practice more!',
+      'I promised my mothers I wouldn\'t give up, no matter how tough the hill gets!',
+      'Trainer-san! Please watch my start today, desu! 🏃‍♀️💨',
+      'Hehehe~ After a long workout, five whole bowls of white rice tastes like heaven!'
+    ],
+    waveQuotes: [
+      'Trainer-san, konnichiwa! Special Week, reporting for training, desu! 👋✨',
+      'Fueee, over here, over here! Trainer-san, look at me wave! 👋',
+      'Okaasan, Trainer-san! Watashi is waving with all her might! 👋🥕',
+      'Konnichiwa, desu! Let\'s do our very best today together! 👋'
+    ],
+    pokeQuotes: {
+      awake: 'Fueee?! A-Awa-wa! Watashi is wide awake, desu! 💦',
+      rapid: [
+        'A-Awa-wa! Trainer-san, that tickles way too much, desu! 💦',
+        'Fueee?! My ears are twitching uncontrollably, desu!',
+        'Awa-wa! Please poke gently, Trainer-san! 💦'
+      ],
+      normal: [
+        'Fueee?! Did you need something, desu ka?',
+        'A-Awa! You surprised me, Trainer-san!',
+        'Watashi is ready for instructions, desu!'
+      ]
+    },
+    dragQuotes: {
+      normal: [
+        'Fueee?! Watashi is floating in midair, desu?! 💦',
+        'A-Awa-wa! My legs are kicking the empty sky!',
+        'Trainer-san, please put me back on the turf, desu!'
+      ],
+      angry: [
+        'Fueee! I am an aspiring number one runner, not a plush doll, desu! 💢',
+        'Mou~! Please let watashi run on her own two feet! 💢',
+        'Awa-wa! Trainer-san, my mother taught me to stay grounded!'
+      ]
+    },
+    flingQuotes: [
+      'Fueeeee—! Watashi is flying like a Pegasus, desu—! 💨'
+    ],
+    petQuotes: [
+      'Ehehe~ Trainer-san\'s headpats feel just like Okaasan\'s... ❤️',
+      'Watashi will run twice as hard after this, desu! ✨',
+      'Ehehe, my ears are flattening from happiness, desu~',
+      'Warm headpats... Watashi feels full of power now! ✨'
+    ],
+    snackTargetQuotes: [
+      'Is that a sweet carrot treat for watashi, desu ka?! 🥕✨'
+    ],
+    eatQuotes: [
+      'Mogu mogu! Sweet Hokkaido carrots are truly the greatest, desu! 🥕',
+      '*munch munch* Delicious! One more bowl, please, Trainer-san! ✨',
+      'Mogu mogu... Watashi\'s stamina is completely restored, desu! 🍙'
+    ],
+    sprintQuotes: [
+      'Watashi, sprinting at full power, desu! 💨',
+      'Watch my acceleration, Suzuka-san! ✨',
+      'Towards the goal with everything I\'ve got! 🏃‍♀️💨'
+    ],
+    snoozeQuotes: [
+      'Zzz... Okaasan... just one more bowl of rice, desu... Zzz...'
+    ],
+    raceQuote: 'Watashi will run with all my heart and aim for first place, desu! 🏁✨',
+    pantQuotes: [
+      'Haa... haa... Watashi... ran with everything I had, desu! 💦',
+      'Fueee... catching my breath... My legs feel like jelly, desu! 💦',
+      'Haa... haa... Okaasan, that was my absolute top speed! 🌾💦'
+    ],
+    raceWinQuotes: [
+      'Yatta—! Japan\'s number one Uma Musume, I did it, Okaasan! 🏆✨',
+      'Fueee—! First place, desu! Suzuka-san, did you see my final spurt?! 🥇✨',
+      'Watashi won, desu! Thank you so much, Trainer-san! 🏆🌾'
+    ],
+    raceFinishQuotes: [
+      'Haa... haa... So close, desu! Next time I\'ll train even harder! 💦',
+      'Fueee... what an amazing race! My heart is still pounding, desu! ✨',
+      'Good race, everyone! Let\'s eat six bowls of white rice to recover! 🍙💦'
+    ]
+  },
+  suzuka: {
+    id: 'suzuka',
+    name: 'Silence Suzuka',
+    title: 'The Silent Speed Demon',
+    model: './source/suzuka small.fbx',
+    textures: {
+      body: './textures/tex_mbdy1002_00_diff.png',
+      hair: './textures/tex_mchr1002_00_hair_diff.png',
+      face: './textures/tex_mchr0001_00_face0_1_diff.png',
+      cheek: './textures/tex_mchr0001_00_face0_0_cheek0.png',
+      eye: './textures/tex_mchr1002_00_eye_diff.png',
+      mouth: './textures/tex_mchr1002_00_mouth_diff.png',
+      brow: './textures/tex_mchr1002_00_mayu_diff.png',
+      tail: './textures/tex_mtail0001_00_1002_diff.png'
+    },
+    baseScale: 0.0065,
+    speedMultiplier: 1.35,
+    themeColor: '#2ed573',
+    defaultHandPose: 'FIST',
+    personalityArmStyle: 'AERODYNAMIC',
+    quotes: [
+      'The scenery from the front... I want to see it again.',
+      'Running is where I feel most at peace... Just the wind and the horizon.',
+      'Spe-chan is running with so much warmth today... It puts my heart at ease.',
+      'No one in front of me... only the open turf stretching outward.',
+      'Trainer-san... my pace feels steady today.',
+      'I want to run ahead of everyone... swiftly, quietly.',
+      'Quiet breath, steady stride... this rhythm is all I need.',
+      'When I am on the track... all the noise in the world disappears.'
+    ],
+    waveQuotes: [
+      'Hello, Trainer-san... the breeze feels gentle today. 👋',
+      'Will you watch my stride from the front, Trainer-san...? 👋',
+      'I am glad to see you... Let us walk together for a while. 👋',
+      'Trainer-san... over here. Quiet days like this are nice. 👋'
+    ],
+    pokeQuotes: {
+      awake: 'Ah... I was drifting off... I am awake now, Trainer-san.',
+      rapid: [
+        'Trainer-san... that tickles a little...',
+        'My focus is wavering... please be gentle...',
+        'Poking so quickly... is something wrong, Trainer-san...?'
+      ],
+      normal: [
+        'Yes, Trainer-san...? I am listening.',
+        'A light tap... do you need me to pick up the pace...?',
+        'I am here, Trainer-san... ready whenever you are.'
+      ]
+    },
+    dragQuotes: {
+      normal: [
+        'Being lifted like this... feels like floating above the turf...',
+        'Trainer-san... my feet cannot feel the ground...',
+        'Please set me down gently... I prefer running on the grass.'
+      ],
+      angry: [
+        'Trainer-san... I would really like to return to the track now.',
+        'Being held up repeatedly... makes it hard to maintain my cadence.',
+        'Trainer-san... please let me run freely.'
+      ]
+    },
+    flingQuotes: [
+      'Gliding through the air... like the wind itself...'
+    ],
+    petQuotes: [
+      'Trainer-san\'s hand... is very warm...',
+      'A soothing touch... my breath is slowing down...',
+      'Thank you, Trainer-san... this calms my mind.',
+      'Gentle headpats... I feel ready to run smoothly again.'
+    ],
+    snackTargetQuotes: [
+      'A small treat on the path... thank you, Trainer-san.'
+    ],
+    eatQuotes: [
+      'Mogu... a quiet, pleasant taste.',
+      'Eating at a calm pace... provides good fuel for running.',
+      'Thank you for the nourishment, Trainer-san...'
+    ],
+    sprintQuotes: [
+      'Accelerating quietly... into the lead.',
+      'To the front... where the open sky waits.',
+      'Leaving everything behind... swift as the breeze.'
+    ],
+    snoozeQuotes: [
+      'Zzz... the green turf... stretching onward... Zzz...'
+    ],
+    raceQuote: 'I will take the lead from the very start... watch me from the rails, Trainer-san.',
+    pantQuotes: [
+      'Haa... haa... Good cadence... catching my breath...',
+      'Haa... the breeze feels cool against my cheeks... Just a moment to recover.',
+      'Haa... my heart rate is slowing down... That was a fine run.'
+    ],
+    raceWinQuotes: [
+      'The scenery from the front... it was beautiful. Thank you, Trainer-san. 🏆✨',
+      'I was able to run freely to the end... I am happy. 🥇',
+      'Leading the pack... this is where I belong. Thank you for believing in me. 🏆'
+    ],
+    raceFinishQuotes: [
+      'Haa... haa... A wonderful run. My breath is returning.',
+      'Good run... The view was clear, and my stride felt steady.',
+      'Haa... next time, I will push my cadence even further.'
+    ]
+  },
+  oguri: {
+    id: 'oguri',
+    name: 'Oguri Cap',
+    title: 'The Bottomless Appetite',
+    model: './source/fatty.fbx',
+    textures: {
+      body: './textures/tex_mbdy1006_00_diff.png',
+      hair: './textures/tex_mchr1006_00_hair_diff.png',
+      face: './textures/tex_mchr0001_00_face0_1_diff.png',
+      cheek: './textures/tex_mchr0001_00_face0_0_cheek0.png',
+      eye: './textures/tex_mchr1006_00_eye_diff.png',
+      mouth: './textures/tex_mchr1006_00_mouth_diff.png',
+      brow: './textures/tex_mchr1006_00_mayu_diff.png',
+      tail: './textures/tex_mtail0001_00_1006_diff.png'
+    },
+    baseScale: 0.0065,
+    speedMultiplier: 0.9,
+    themeColor: '#70a1ff',
+    defaultHandPose: 'HOLD_CARROT',
+    personalityArmStyle: 'STEADY',
+    quotes: [
+      'Is that food. ...Watashi will eat it.',
+      'Kasamatsu taught me to never leave a single grain of rice behind.',
+      'Ten large bowls of rice is merely a warm-up before morning gallops.',
+      'Trainer, my stomach has reached critical capacity deficit. Sustenance is required.',
+      'Delicious aroma detected at coordinate zero. Sweet carrot supply confirmed.',
+      'Running expends thermal energy. Eating recovers thermal energy. The logic is sound.',
+      'The track is clear. My hooves are conditioned. We can run at any time.',
+      'Trainer said "you have a mountain of work." I went outside to look for the mountain. It was papers.'
+    ],
+    waveQuotes: [
+      'Hello, Trainer. ...Do you possess snacks on your person. 👋🍙',
+      'Greeting acknowledged. Now, about lunch logistics. 👋',
+      'Watashi is waving. This burns roughly two calories. 👋',
+      'Trainer spotted. If you have extra rations, watashi is available. 👋'
+    ],
+    pokeQuotes: {
+      awake: 'Watashi was processing carbohydrates. Awake now. Ready for breakfast.',
+      rapid: [
+        'Repetitive contact detected. My ribs are thoroughly protected by muscle.',
+        'Rapid finger tapping does not produce food, Trainer.',
+        'Poking frequency excessive. Are you checking my physical readiness.'
+      ],
+      normal: [
+        'Yes, Trainer. State your directive.',
+        'Contact registered. Did lunch arrive.',
+        'Watashi is present. Awaiting orders.'
+      ]
+    },
+    dragQuotes: {
+      normal: [
+        'Airborne transport initiated. Center of gravity shifted upward.',
+        'Watashi is being relocated. Please maintain a firm grip.',
+        'My hooves are suspended in air. Ground friction reduced to zero.'
+      ],
+      angry: [
+        'Trainer, repeated aerial suspension delays meal times.',
+        'I weigh approximately enough to fatigue your forearms. Please set me down.',
+        'Cease lifting. My stomach requires gravitational alignment for proper digestion.'
+      ]
+    },
+    flingQuotes: [
+      'Parabolic trajectory confirmed. Preparing impact-absorbing landing stance.'
+    ],
+    petQuotes: [
+      'Head contact registered. ...It is not unpleasant.',
+      'Trainer\'s palm produces adequate thermal warmth. Acceptable.',
+      'Endorphin levels rising slightly. Now, about lunch rations.',
+      'Sensory stimulation acknowledged. My stamina is steadily recovering.'
+    ],
+    snackTargetQuotes: [
+      'Food item detected on floor. Intercepting at maximum velocity.'
+    ],
+    eatQuotes: [
+      'Mogu, mogu. High nutritional density confirmed. Delicious. 🥕',
+      '*chewing* Kasamatsu rice and sweet carrots. Optimal combination.',
+      'Mogu mogu. Consumed entirely. Second helping requested, Trainer.'
+    ],
+    sprintQuotes: [
+      'Full throttle. Target pace locked.',
+      'Accelerating. Food awaits at the finish line.',
+      'Kasamatsu spirit. Watashi will not yield the path.'
+    ],
+    snoozeQuotes: [
+      'Zzz... large bowl of noodles... triple helping of pork... Zzz...'
+    ],
+    raceQuote: 'The starting gate is open. Watashi will secure victory and the victory banquet. 🏁',
+    pantQuotes: [
+      'Haa... haa... Calorie reserves depleted. Critical deficit reached.',
+      'Haa... breathing heavily. My internal combustion engine requires immediate refueling.',
+      'Haa... Kasamatsu hill climbs were tough, but that was intense. Sustenance needed.'
+    ],
+    raceWinQuotes: [
+      'First place secured. Trainer, lead me to the celebratory buffet immediately. 🏆🥕',
+      'Victory confirmed. Trophy acquired. Now beginning post-race nutritional replenishment! 🥇',
+      'The championship is Kasamatsu\'s. And the celebratory feast is mine. 🏆✨'
+    ],
+    raceFinishQuotes: [
+      'Haa... good race. Energy output exceeded projections. Rations requested.',
+      'Haa... haa... Second place noted. Next race requires additional carbohydrates.',
+      'Crossed the finish line. Stride cadence was acceptable. Now, let us dine.'
+    ]
+  },
+  helios: {
+    id: 'helios',
+    name: 'Daitaku Helios',
+    title: 'The Party Gyaru',
+    model: './source/helios.fbx',
+    textures: {
+      body: './textures/tex_mbdy1065_00_diff.png',
+      hair: './textures/tex_mchr1065_00_hair_diff.png',
+      face: './textures/tex_mchr0001_00_face0_1_diff.png',
+      cheek: './textures/tex_mchr0001_00_face0_0_cheek0.png',
+      eye: './textures/tex_mchr1065_00_eye_diff.png',
+      mouth: './textures/tex_mchr1065_00_mouth_diff.png',
+      brow: './textures/tex_mchr1065_00_mayu_diff.png',
+      tail: './textures/tex_mtail0001_00_1065_diff.png'
+    },
+    baseScale: 0.0065,
+    speedMultiplier: 1.25,
+    themeColor: '#ffa502',
+    defaultHandPose: 'PEACE_V',
+    personalityArmStyle: 'GYARU',
+    quotes: [
+      'Wassuuup~!? Uchi\'s tenshon is totally MAX right now, let\'s GOOO~!! ✌️✨',
+      'Cho-yabai vibes detected~!! The beat is bumping and my hooves are twitching to dance!? 🎶',
+      'Where\'s my gorgeous Ojousama at~?! The party literally CANNOT start without us, majide! 💖',
+      'Spe-chi is looking super hyped today and Zuka-senpai\'s form is pure art, I swear~!! 🔥',
+      'Hyper mega ultra turbo mood activated~!! Nobody can catch this vibe today, no cap!! ⚡',
+      'Turn that bass UP, Trainer~!! Check out this sick tempo uchi\'s pacing to~!! 🎧',
+      'Negative aura is strictly forbidden in uchi\'s radius, understood~?! Pari-pi all day, baby~!! 🤟',
+      'Majide?! Running this fast feels like riding a laser beam through Shibuya at midnight~!! ⚡'
+    ],
+    waveQuotes: [
+      'Yoooo, Trainer~!! High five right now, don\'t leave uchi hanging~!? 👋🔥',
+      'Wassup, wassup~!! Poji-pisu for the camera, peace peace peace~!! 👋✌️✨',
+      'Hey, hey, YOU~!! Catch this super charged vibe-wave right in the chest~!! 👋⚡',
+      'Trainer, check the drip~!! Waving with maximum glitter energy today~!! 👋💖'
+    ],
+    pokeQuotes: {
+      awake: 'GYAAAH!? Majide, uchi was NOT drooling, that was just liquid hype leaking out!? ⚡',
+      rapid: [
+        'Whoa-whoa-WHOA~!! Trainer is going turbo poke mode, majide crazy APM!? 💦',
+        'AHAHA tickle attack detected~!? Uchi\'s gyaru shield is taking massive damage~!!',
+        'Yaba-tan~!! Stop tapping so fast, my ponytail is spinning like a rotor blade!? 💦'
+      ],
+      normal: [
+        'Yo~!! What\'s the 411, Trainer~?! Hit me with the deets! ✨',
+        'Poke received~!! Tenshon boosted by ten million points, let\'s ride! ✌️',
+        'Eyyyy~!! You called the party captain~?! Uchi is ready to ROLL! 🔥'
+      ]
+    },
+    dragQuotes: {
+      normal: [
+        'YOOOOO~?! Uchi got air-lifted like a disco ball at 3 AM~!? 🪩✨',
+        'Majide floating~?! Trainer, check out my sick mid-air breakdance moves~!!',
+        'Wheee~!! Sky view is totally lit, but put uchi back down on the dance floor~!!'
+      ],
+      angry: [
+        'HOLD UP~!! Even party legends need their boots on the ground, majide uncool~!! 💢',
+        'Timeout, Trainer~!! Flinging uchi around is totally killing the aesthetic, bro! 💢',
+        'Yaba-tan~!! Put uchi down before my peace sign loses its sparkle, majide! 💢'
+      ]
+    },
+    flingQuotes: [
+      'SUPER SONIC HYPER LAUNCH~!! Uchi is flying past the stratosphere, WOOOOOO~!! 💨✨'
+    ],
+    petQuotes: [
+      'KYAAA~!! Headpats are giving uchi pure serotonin overload, majide so good~!! ❤️',
+      'Aww yeah, that\'s the sweet spot~!! Tenshon level hitting 999999 right now! ✨',
+      'Trainer\'s hands got the magic touch~!! Purring like a turbo engine, ehehe~!! 💖',
+      'Vibe check PASSED with flying colors~!! Uchi loves this so much, majide! 🔥'
+    ],
+    snackTargetQuotes: [
+      'HOLY CRAP A SNACK DROP~?! Daitaku Helios is zooming in at mach speed, watch out~!! 🥕🔥'
+    ],
+    eatQuotes: [
+      'MOGU MOGU~!! Cho-oishii sweet carrots giving uchi nuclear-grade fuel~!! 🥕✨',
+      '*crunch crunch* DELISH TO THE MAX~!! Uchi\'s tastebuds are literally raving right now! 🎶',
+      'Down the hatch~!! Sugar rush hitting the bloodstream, let\'s RUUUUN~!! ⚡'
+    ],
+    sprintQuotes: [
+      'TURBO BOOST ENGAGED~!! Can\'t catch this lightning bolt, byeeee~!! 💨⚡'
+    ],
+    snoozeQuotes: [
+      'Zzz... Pari-pi never dies... just recharging the glowsticks... Zzz... 🪩'
+    ],
+    raceQuote: 'MAX HYPE AT THE GATES~!! First place or bust, let\'s tear up this turf, BABYYYY~!! 🏁🔥',
+    pantQuotes: [
+      'Whew~!! Haa, haa... That was cho-yabai speed, uchi is totally winded, majide! 💦',
+      'Haa... haa... My glowsticks are overheating! Need some hydration STAT! 💦⚡',
+      'Whew~! Tenshon level temporarily resting... My lungs are partying too hard! 💖'
+    ],
+    raceWinQuotes: [
+      'FIRST PLACE VIBES BABY~!! Daitaku Helios takes the crown, LETS GOOO~!! 🏆🥇✨',
+      'CHO-SAIKOU~!! Who\'s the fastest party queen on turf?! It\'s UCHI, majide! 🏆🔥',
+      'VICTORY POJI-PISU~!! Ojousama, did you see that sick sprint?! WE WON!! ✌️🥇💖'
+    ],
+    raceFinishQuotes: [
+      'Whew, GG everyone~!! That heat was literally straight fire, majide! 💦🔥',
+      'Haa... haa... What a sick race! Next time uchi is cranking the turbo to 11! ⚡',
+      'Pari-pi never stops, even when catching breath! High five, Trainer! 👋✨'
+    ]
+  },
+  mambo: {
+    id: 'mambo',
+    name: 'Matikane Tannhauser',
+    title: 'The Clumsy Wholesome Goober',
+    model: './source/Mambo.fbx',
+    textures: {
+      body: './textures/Body_D.png',
+      hair: './textures/Hair_D.png',
+      face: './textures/Face_D.png',
+      cheek: './textures/Cheek_D.png',
+      eye: './textures/Eyes_D.png',
+      mouth: './textures/Mouth_D.png',
+      brow: './textures/Brows_D.png',
+      tail: './textures/Tail_D.png'
+    },
+    baseScale: 0.0065,
+    speedMultiplier: 0.95,
+    themeColor: '#ff6b81',
+    defaultHandPose: 'FIST',
+    personalityArmStyle: 'WOBBLY',
+    quotes: [
+      'Ei, ei, mun! ✨ Today watashi will show everyone solid, ordinary greatness—ack, stepped on a crack!',
+      'Maaambo, mambo, mambo~ 🎶 Feeling totally energized—wait, did my sock just slip down?!',
+      'A-Ah! Nosebleed alert! Tissue emergency—good thing watashi packed three whole boxes! 🩸',
+      'I might just be ordinary old Machitan, but I\'ll give it 120%—whoa, balanced on one foot!',
+      'Team Canopus, charge! Today we seize first place—wait, which direction was the starting gate again?!',
+      'Did you see that stride just now?! That was easily a solid 75 points—oof, tripped on thin air!',
+      'A completely flat surface—my eternal arch-nemesis! But watashi shall conquer it anyway!',
+      'Mun-power fully charged and ready—now where did I put my hair ribbon?!'
+    ],
+    waveQuotes: [
+      'Ei, ei, mun! Hello there, Trainer—whoops, almost tilted over! 👋✨',
+      'Maaambo~ waving with both ears—and my hat stayed on! Yay! 👋🎶',
+      'Ehehe, look Trainer, no stumbles this time—well, except that tiny wobble! 👋',
+      'Machitan is reporting for duty—hold on, let me wipe my nose first! 👋🩸'
+    ],
+    pokeQuotes: {
+      awake: 'Mun?! I was totally awake and doing mental training—okay fine, I was drooling! 💦',
+      rapid: [
+        'Awa-wa! Poke barrage incoming—tactical squirm maneuver! 💦',
+        'Mun-mun-mun! Trainer, that tickles my ribs—stop, I\'m gonna sneeze!',
+        'A-Ah! Rapid poke combo—my hat is spinning off my head!'
+      ],
+      normal: [
+        'Ei! Machitan reporting—did you need an ordinary miracle?!',
+        'Mun? Ready for action—just don\'t poke my nose, it\'s sensitive!',
+        'Wobbly step recovered! Watashi is ready, Trainer!'
+      ]
+    },
+    dragQuotes: {
+      normal: [
+        'Waaaah! Dangled in the breeze—my shoes are dangling too! 💦',
+        'Mun?! Floating mid-air—look at my tactical air-paddle! 🐾',
+        'Trainer, I\'m suspended like a prize fish—set me down gently, please!'
+      ],
+      angry: [
+        'Hmph! Even ordinary girls have dignity—put me down, please! 💢',
+        'Mou~! Picking me up three times—that\'s a yellow card, Trainer!',
+        'Mun! I am a proud Canopus racer, not a plushie keychain! 💢'
+      ]
+    },
+    flingQuotes: [
+      'Mambo fling—! Landing gear deployed—bracing for a 60-point tumble—! 💨'
+    ],
+    petQuotes: [
+      'Ehehe~ Headpats charge up my Mun-battery to maximum capacity! ✨',
+      'So warm... Ah! Happy nosebleed threatening to break through! 🩸',
+      'Maaambo~ My ears are purring! That felt so nice, Trainer!',
+      'Ehehe, ordinary Machitan is soaking up extraordinary praise! ❤️'
+    ],
+    snackTargetQuotes: [
+      'A floor snack spotted—scrambling at full speed before someone else steps on it! 🥕✨'
+    ],
+    eatQuotes: [
+      'Mogu mogu! Sweet carrot energy—restoring my luck stats! ✨',
+      '*munch munch* Delicious—almost bit my tongue, but saved it with skill!',
+      'Mogu mogu! Ordinary food tastes extraordinary when shared! 🍙'
+    ],
+    sprintQuotes: [
+      'Full Canopus turbo sprint—watch out for pebbles—! 💨'
+    ],
+    snoozeQuotes: [
+      'Zzz... Mambo... five more minutes... no nosebleeds in dreamland... Zzz...'
+    ],
+    raceQuote: 'Ei, ei, mun! Team Canopus charging forward—nothing can trip me up today—! 🏁✨',
+    pantQuotes: [
+      'Haa, haa... mun... Made it without tripping... that\'s an ordinary miracle! 💦',
+      'Haa... haa... My hat almost flew away from pure speed! Catching my breath... 💦',
+      'Ei, ei, mun... Legs are slightly wobbly, but still firmly attached! 💦'
+    ],
+    raceWinQuotes: [
+      'W-Wait, really?! First place?! Team Canopus takes the gold, mun-power is real!! 🏆✨',
+      'Ei, ei, mun! Ordinary Machitan conquered the turf! I actually won, Trainer! 🥇🎉',
+      'Maaambo~!! Look Trainer, no stumbles and a shiny gold ribbon! Yay!! 🏆✨'
+    ],
+    raceFinishQuotes: [
+      'Mun, mun... crossed the line safely without a nosebleed! That\'s a personal best! 💦',
+      'Haa... haa... Everyone was so fast! But Machitan gave it a solid 120%! ✨',
+      'Good job everyone! Time to sit down before my legs remember they\'re tired! 💦'
+    ]
+  }
+};
+
+export const DEFAULT_SETTINGS = {
+  enabledChibis: ['spe', 'suzuka', 'oguri', 'helios', 'mambo'],
+  population: 3,
+  scale: 1.0,
+  speed: 1.0,
+  volume: 0.6,
+  soundEnabled: true,
+  speechBubbles: true,
+  collisionBounce: true
+};

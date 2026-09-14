@@ -1,0 +1,61 @@
+{
+  "manifest_version": 3,
+  "name": "Chibi Goobers: 3D Companions",
+  "version": "1.0.0",
+  "description": "Cute 3D chibis that roam around the bottom of your browser being adorable little goobers!",
+  "permissions": [
+    "storage",
+    "activeTab"
+  ],
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "chibi-goobers@jeptha.extension",
+      "strict_min_version": "109.0"
+    }
+  },
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_title": "Chibi Goobers"
+  },
+  "background": {
+    "scripts": [
+      "src/background/background.js"
+    ],
+    "service_worker": "src/background/background.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "dist/content.bundle.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "source/*",
+        "textures/*",
+        "dist/*",
+        "dist/chunks/*",
+        "dist/assets/*",
+        "popup/*"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "commands": {
+    "feed_snack": {
+      "suggested_key": {
+        "default": "Alt+C"
+      },
+      "description": "Drop a carrot snack for nearby chibis"
+    }
+  }
+}
